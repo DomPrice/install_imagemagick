@@ -1,0 +1,43 @@
+#!/bin/bash
+
+echo "-------------- ImageMagick Installer --------------"
+echo "by Dom Price / dom@cocodesign.com"
+echo "Date: 12/08/2021"
+
+# Get Arguments
+while getopts u: flag
+do
+    case "${flag}" in
+        u) user_local=${OPTARG};;
+    esac
+done
+
+# Update APT GET and dependencies
+sudo apt update
+sudo apt-get install build-essential
+
+# Make TMP for DL dirs if not exists
+mkdir -p "/home/$user_local/tmp/installers/ImageMagick"
+
+# Enter the temp dir
+cd /home/$user_local/tmp/installers || echo "/home/$user_local/tmp/installers : Unable to enter dir"
+
+# Download and unzip ImageMagick to TMP dir
+echo "Downloading and unzip ImageMagick...."
+wget https://www.imagemagick.org/download/ImageMagick.tar.gz
+tar xvzf ImageMagick.tar.gz -C /home/$user_local/tmp/installers/ImageMagick --strip-components 1
+
+# Enter the tmp insttall dir
+cd ImageMagick || echo "/home/$user_local/tmp/installers/ImageMagick : Unable to enter dir"
+
+# Configure
+echo "Configuring...."
+./configure
+
+# Compile
+echo "Compiling ImageMagick...."
+make
+sudo make install
+sudo ldconfig /usr/local/lib
+
+echo "DONE!"
