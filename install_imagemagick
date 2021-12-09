@@ -1,7 +1,7 @@
 #!/bin/bash
 
 echo "-------------- ImageMagick Installer --------------"
-echo "by Dom Price / dom@cocodesign.com"
+echo "by Dom Price / info@domprice.com"
 echo "Date: 12/08/2021"
 
 # Get Arguments
